@@ -1,25 +1,20 @@
 import SwiftUI
 
 struct RootView: View {
-    enum Screen {
-        case simple
-        case karuta
-    }
-
-    @State private var screen: Screen = .simple
+    @EnvironmentObject private var appMode: AppMode
 
     var body: some View {
-        switch screen {
-        case .simple:
-            SimpleSpeakView {
-                screen = .karuta
+        ZStack {
+            if appMode.showClassic {
+                ContentView()
+            } else {
+                DecksHomeView()
             }
-        case .karuta:
-            ContentView()
         }
     }
 }
 
 #Preview {
     RootView()
+        .environmentObject(AppMode())
 }
